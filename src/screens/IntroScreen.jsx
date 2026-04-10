@@ -5,7 +5,7 @@ export default function IntroScreen({ onStart }) {
     <div className="intro-screen">
       <div className="intro-content">
         <div className="spaceship-art" aria-hidden="true">
-          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="90" height="60" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Simple pixel-art spaceship */}
             <rect x="50" y="0" width="20" height="10" fill="#00ff41"/>
             <rect x="40" y="10" width="40" height="20" fill="#00ff41"/>

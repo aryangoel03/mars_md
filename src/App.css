@@ -190,39 +190,38 @@ body {
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  padding: 24px;
+  padding: 16px;
 }
 
 .intro-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 14px;
   max-width: 600px;
   width: 100%;
   text-align: center;
 }
 
 .spaceship-art {
-  margin-bottom: 8px;
   filter: drop-shadow(0 0 12px rgba(0, 255, 65, 0.6));
 }
 
 .intro-year {
-  font-size: var(--fs-md);
+  font-size: var(--fs-sm);
   color: var(--grey);
   letter-spacing: 0.15em;
 }
 
 .intro-title {
-  font-size: clamp(28px, 6vw, 48px);
+  font-size: clamp(26px, 5vw, 40px);
   color: var(--green);
   text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
   letter-spacing: 0.1em;
 }
 
 .intro-subtitle {
-  font-size: var(--fs-md);
+  font-size: var(--fs-xs);
   color: var(--cyan);
   letter-spacing: 0.15em;
   text-shadow: 0 0 10px rgba(0, 200, 255, 0.6);
@@ -232,11 +231,12 @@ body {
   text-align: left;
   font-size: var(--fs-sm);
   color: var(--white);
-  line-height: 2;
+  line-height: 1.7;
+  padding: 16px 20px;
 }
 
 .intro-lore p {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .intro-lore p:last-child {
@@ -261,14 +261,14 @@ body {
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  padding: 24px;
+  padding: 16px;
 }
 
 .conclusion-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 14px;
   max-width: 600px;
   width: 100%;
   text-align: center;
@@ -279,20 +279,20 @@ body {
 }
 
 .conclusion-badge {
-  font-size: var(--fs-md);
+  font-size: var(--fs-sm);
   color: var(--yellow);
   letter-spacing: 0.15em;
 }
 
 .conclusion-title {
-  font-size: clamp(24px, 5vw, 40px);
+  font-size: clamp(26px, 5vw, 40px);
   color: var(--green);
   text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
   letter-spacing: 0.1em;
 }
 
 .conclusion-subtitle {
-  font-size: var(--fs-md);
+  font-size: var(--fs-xs);
   color: var(--cyan);
   letter-spacing: 0.15em;
 }
@@ -301,11 +301,12 @@ body {
   text-align: left;
   font-size: var(--fs-sm);
   color: var(--white);
-  line-height: 2;
+  line-height: 1.7;
+  padding: 16px 20px;
 }
 
 .conclusion-message p {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .conclusion-flavour {

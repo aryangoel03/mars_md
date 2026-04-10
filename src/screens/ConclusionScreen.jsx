@@ -5,7 +5,7 @@ export default function ConclusionScreen({ onRestart }) {
     <div className="conclusion-screen">
       <div className="conclusion-content">
         <div className="conclusion-art" aria-hidden="true">
-          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="90" height="60" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Mars planet */}
             <circle cx="60" cy="40" r="35" fill="#c1440e" opacity="0.9"/>
             <ellipse cx="50" cy="30" rx="12" ry="8" fill="#a03810" opacity="0.6"/>

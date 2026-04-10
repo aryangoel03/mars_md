@@ -62,8 +62,12 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
     if (missedCritical.includes(index)) {
       setMissedCritical(prev => prev.filter(i => i !== index))
     }
-    // keep focus in search bar so user can keep typing after selecting an option
-    searchRef.current?.focus()
+    // desktop: keep focus so user can keep typing; touch devices: blur to suppress keyboard popup
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      searchRef.current?.blur()
+    } else {
+      searchRef.current?.focus()
+    }
   }
 
   function handleProceed() {
