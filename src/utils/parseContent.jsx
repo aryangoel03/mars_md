@@ -1,29 +1,42 @@
-// Converts a plain text string with **bold** markers and newlines into React elements.
-// This is intentionally minimal — no full markdown parser needed.
+// Converts plain text with **bold**, *closing*, and newlines into React elements.
+
+function parseInline(text) {
+  // Match **bold** first (two asterisks), then *closing* (one asterisk)
+  const regex = /\*\*([^*]+)\*\*|\*([^*]+)\*/g
+  const tokens = []
+  let last = 0
+  let match
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > last) tokens.push({ type: 'text', content: text.slice(last, match.index) })
+    if (match[1] !== undefined) tokens.push({ type: 'bold', content: match[1] })
+    else tokens.push({ type: 'closing', content: match[2] })
+    last = regex.lastIndex
+  }
+  if (last < text.length) tokens.push({ type: 'text', content: text.slice(last) })
+
+  // Expand text tokens: split on \n and interleave <br>
+  const result = []
+  tokens.forEach((token, ti) => {
+    if (token.type === 'bold') {
+      result.push(<strong key={`b${ti}`}>{token.content}</strong>)
+    } else if (token.type === 'closing') {
+      result.push(<em key={`c${ti}`} className="text-closing">{token.content}</em>)
+    } else {
+      token.content.split('\n').forEach((line, li, arr) => {
+        result.push(line)
+        if (li < arr.length - 1) result.push(<br key={`br${ti}-${li}`} />)
+      })
+    }
+  })
+
+  return result
+}
 
 export function parseContent(text) {
   if (!text) return null
-
-  const paragraphs = text.split('\n\n')
-
-  return paragraphs.map((para, pi) => {
+  return text.split('\n\n').map((para, pi) => {
     if (!para.trim()) return null
-
-    // Split by **bold** markers
-    const parts = para.split(/(\*\*[^*]+\*\*)/)
-    const children = parts.map((part, i) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={i}>{part.slice(2, -2)}</strong>
-      }
-      // Handle single newlines within a paragraph as <br>
-      const lines = part.split('\n')
-      return lines.map((line, li) => (
-        li < lines.length - 1
-          ? [line, <br key={`${i}-${li}`} />]
-          : line
-      ))
-    })
-
-    return <p key={pi}>{children}</p>
+    return <p key={pi}>{parseInline(para)}</p>
   })
 }

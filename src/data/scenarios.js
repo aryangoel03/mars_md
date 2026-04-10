@@ -267,21 +267,199 @@ A low LR− (< 0.1) makes D-dimer a good **rule-out** test. The modest LR+ makes
   },
 
   // ---------------------------------------------------------------------------
-  // SCENARIO 2 — PLACEHOLDER (fill in your content below)
+  // SCENARIO 2 — ELIAS THORNE
   // ---------------------------------------------------------------------------
   {
     id: 2,
-    title: "Patient Name Here",
-    subtitle: "Scenario subtitle here",
+    title: "Elias Thorne",
+    subtitle: "Beneath the Red Dust",
     stages: [
+      // -----------------------------------------------------------------------
+      // PATIENT HISTORY
+      // -----------------------------------------------------------------------
       {
         type: "narrative",
-        content: `**Patient:** Name | **Age:** XX | **Sex:** X
+        content: `**Patient:** Elias Thorne | **Age:** 34 | **Sex:** Male | **Occupation:** Mining Engineer
 
-Add your scenario history here...`,
+Elias was extracted by drone teams after being pinned beneath the chassis of a Martian rover for six hours. He complains of severe pain and a sensation of "heaviness" in both lower limbs.
+
+**Mechanism:** Crush injury to bilateral lower limbs — six hours of compression beneath a rover chassis.
+
+**Wound contamination:** The sector dust — high in perchlorate salts and unknown crystalline silicates — was forced into open lacerations during the crush.
+
+**Urine:** Elias reports his urine looked "like Martian soil" (dark tea-coloured) before loading onto the transport.
+
+**Past Medical History:** Nil significant. **Medications:** Nil. **Allergies:** Nil known.
+
+**Social History:** Non-smoker. Stationed on Mars for 18 months.`,
         image: null,
       },
-      // Add more stages following the same structure as Scenario 1
+
+      // -----------------------------------------------------------------------
+      // PHASE 1 — Physical Examination
+      // -----------------------------------------------------------------------
+      {
+        type: "mcq",
+        question: `You begin your physical examination of Elias's lower limbs. Which of the following findings would you most expect to encounter?`,
+        image: null,
+        options: [
+          "Flaccid paralysis of the upper extremities with intact sensation",
+          '"Woody" oedema of the lower limbs, diminished distal pulses, and extreme pain on passive stretch',
+          "Global hyperreflexia and a positive Babinski sign",
+          "High-pitched inspiratory stridor and tracheal deviation",
+          "Petechial rash across the chest and conjunctival haemorrhaging",
+        ],
+        correct: 1,
+        feedback: [
+          "**Flaccid upper limb paralysis** with intact sensation points to a cervical spinal cord or lower motor neuron lesion. Localise the anatomy — Elias's injury is to the lower limbs.",
+          null, // correct — explanation shown instead
+          "**Hyperreflexia** and a positive Babinski are upper motor neuron signs, suggesting CNS pathology. Crush injury affects peripheral structures — you would expect impaired reflexes, not enhanced ones.",
+          "**Stridor and tracheal deviation** indicate an airway or thoracic emergency. The mechanism here is an isolated lower limb crush.",
+          "**Petechial rash** and conjunctival haemorrhage are hallmarks of **fat embolism syndrome**, which typically follows long bone fractures — not the primary complication of a direct lower limb crush.",
+        ],
+        explanation: `These are the hallmarks of **compartment syndrome** — a limb-threatening emergency. Rising intracompartmental pressure compresses vasculature and impairs perfusion. **Pain on passive stretch** is the earliest and most sensitive sign — do not wait for pulselessness to act.`,
+        explanationImage: null,
+      },
+
+      // -----------------------------------------------------------------------
+      // EXAM FINDINGS NARRATIVE
+      // -----------------------------------------------------------------------
+      {
+        type: "narrative",
+        content: `**Examination Findings:**
+
+Both lower limbs are tense and woody to palpation — the skin is stretched and shiny, with no give in the compartments. Pedal pulses are faint and difficult to locate bilaterally.
+
+On passive flexion of the ankles, Elias cries out. Pain is markedly out of proportion to the degree of movement.
+
+**Vitals:**
+
+Heart Rate: 118 bpm | Blood Pressure: 98/62 mmHg | Respiratory Rate: 22 breaths/min | SpO₂: 96% on room air | Temperature: 36.4°C | GCS: 14/15 (confused)
+
+**Urinary catheter output:** Dark brown urine — the colour of Martian soil. Consistent with **myoglobinuria**.`,
+        image: null,
+      },
+
+      // -----------------------------------------------------------------------
+      // PHASE 2 — Investigations
+      // -----------------------------------------------------------------------
+      {
+        type: "mcq",
+        question: `With suspected rhabdomyolysis and myoglobinuria confirmed, which set of investigations is the highest priority in this resource-limited environment?`,
+        image: null,
+        options: [
+          "Full-body CT scan and genetic sequencing for Martian microbial contaminants",
+          "Bedside ultrasound (eFAST) and a lumbar puncture",
+          "Serum Creatine Kinase (CK), Basic Metabolic Panel (including potassium), and a 12-lead ECG",
+          "Plasma Troponin-I and coronary angiogram",
+          "Urine culture and sensitivity for anaerobic organisms",
+        ],
+        correct: 2,
+        feedback: [
+          "**CT and genetic sequencing** address exotic concerns — the immediate threat here is an **electrolyte-driven cardiac** one, not microbial contamination. Treat the life threat first.",
+          "**eFAST** and **lumbar puncture** address haemorrhage and meningitis respectively — neither targets the electrolyte crisis or muscle breakdown present here.",
+          null, // correct — explanation shown instead
+          "**Troponin-I** lacks specificity in rhabdomyolysis due to skeletal muscle cross-reactivity. A coronary angiogram requires a primary cardiac event as indication.",
+          "**Urine culture** targets infection. Elias has no sepsis picture — the dark urine reflects **myoglobin**, not bacteria.",
+        ],
+        explanation: `The **rhabdomyolysis triad**: serum **CK** confirms muscle breakdown, **potassium** reveals the electrolyte emergency, and the **ECG** shows whether cardiac conduction is already compromised. Maximum clinical information per resource in a constrained environment.`,
+        explanationImage: null,
+      },
+
+      // -----------------------------------------------------------------------
+      // PHASE 3 — ECG Interpretation
+      // -----------------------------------------------------------------------
+      {
+        type: "mcq",
+        question: `The results return: Serum Potassium 7.2 mEq/L. Serum CK 85,000 U/L. You review the 12-lead ECG. What is the most critical interpretation?`,
+        image: null,
+        options: [
+          "Pathological Q-waves indicating a chronic transmural myocardial infarction",
+          "ST-segment elevation in leads V1–V4 suggesting acute silicate-induced pulmonary embolism",
+          "Peaked T-waves and widening of the QRS complex, signalling life-threatening hyperkalaemia",
+          "Shortened PR interval and delta waves — consistent with Wolff-Parkinson-White syndrome",
+          "Sinus bradycardia attributed to Martian atmospheric pressure changes",
+        ],
+        correct: 2,
+        feedback: [
+          "**Pathological Q-waves** indicate established myocardial necrosis from a prior MI. There is no history or mechanism for a chronic infarct here.",
+          "**Focal ST-elevation** in V1–V4 reflects anterior coronary occlusion. **Hyperkalaemia** causes global conduction delays — a fundamentally different mechanism.",
+          null, // correct — explanation shown instead
+          "**Delta waves** and a short PR interval are features of a congenital accessory pathway (WPW). This is unrelated to the electrolyte disturbance.",
+          "**Sinus bradycardia** can occur in hyperkalaemia but is not the critical finding at this potassium level and with these conduction changes.",
+        ],
+        explanation: `Hyperkalaemia follows a predictable **ECG ladder**: peaked T-waves → PR prolongation → loss of P-waves → **QRS widening** (sine wave) → VFib/asystole. Lysed muscle cells dump **intracellular potassium** directly into the bloodstream. At 7.2 mEq/L with QRS widening, cardiac arrest is imminent.`,
+        explanationImage: null,
+      },
+
+      // -----------------------------------------------------------------------
+      // PHASE 4 — Immediate Management
+      // -----------------------------------------------------------------------
+      {
+        type: "mcq",
+        question: `Given the potassium of 7.2 mEq/L and ECG changes, what is your immediate pharmacological priority?`,
+        image: null,
+        options: [
+          "10 units IV insulin with 50% dextrose to shift potassium intracellularly",
+          "IV Calcium Gluconate to stabilise the cardiac membrane",
+          "High-dose loop diuretics (furosemide) to flush myoglobin renally",
+          `Administer "Martian-Antitoxin" to neutralise the perchlorate dust salts`,
+          "Normal saline bolus at 2 L/hr to prevent acute kidney injury",
+        ],
+        correct: 1,
+        feedback: [
+          "**Insulin/Dextrose** shifts potassium intracellularly — it is the essential next step, but takes 15–30 minutes to act. With **QRS widening already present**, that delay is unacceptable.",
+          null, // correct — explanation shown instead
+          "**Loop diuretics** lower potassium over hours via renal excretion — far too slow when the heart is at immediate risk.",
+          "No such agent exists, and even if it did, the immediate danger is **cardiac** — not the dust contaminants.",
+          "**Fluid resuscitation** is critical to prevent myoglobin cast nephropathy, but cardiac arrest from hyperkalaemia will occur before the kidneys fail if not addressed first.",
+        ],
+        explanation: `**Calcium Gluconate** (or Chloride) stabilises the myocardial membrane within 1–3 minutes by raising the threshold potential — it does **not** lower serum potassium, it counteracts its cardiotoxicity. This buys time for definitive **potassium-shifting agents** (insulin-dextrose, salbutamol).`,
+        explanationImage: null,
+      },
+
+      // -----------------------------------------------------------------------
+      // PHASE 5 — Ethical Considerations
+      // -----------------------------------------------------------------------
+      {
+        type: "mcq",
+        question: `As Elias stabilises, the colony administrator raises a concern about ongoing management. What is the primary ethical tension in this resource-limited environment?`,
+        image: null,
+        options: [
+          "The risk of Elias developing rover phobia, reducing the colony's mining capacity",
+          "The depletion of the colony's limited clean water reserves due to the massive fluid resuscitation required",
+          "The possibility his DNA has been permanently altered by Martian surface radiation",
+          "The need to repatriate him to Earth for a kidney transplant, currently impossible due to the war",
+          "Whether his prosthetic limbs (if required) can be fabricated using Martian basalt",
+        ],
+        correct: 1,
+        feedback: [
+          "Work-capacity impact from psychological sequelae is a valid concern, but not the primary **ethical** tension in a resource-constrained survival setting.",
+          null, // correct — explanation shown instead
+          "**Radiation exposure** is a genuine long-term health risk for colonists, but not an immediate actionable ethical dilemma in this acute management context.",
+          "An **impossible option** forecloses the dilemma rather than creating one — there is no choice to be weighed when repatriation is categorically unavailable.",
+          "Prosthetic fabrication is an engineering challenge, not an ethical one — it lacks the **immediate resource-allocation urgency** present here.",
+        ],
+        explanation: `Standard rhabdomyolysis requires **6–10 litres of fluid daily** to maintain urine output and prevent **myoglobin cast nephropathy**. In a Martian colony with finite water reserves, diverting that volume to one patient creates a genuine **utilitarian tension** — individual care against collective survival.`,
+        explanationImage: null,
+      },
+
+      // -----------------------------------------------------------------------
+      // CLOSING NARRATIVE
+      // -----------------------------------------------------------------------
+      {
+        type: "narrative",
+        content: `You administer IV calcium gluconate immediately, followed by insulin-dextrose to shift the potassium intracellularly. Aggressive saline resuscitation is commenced to protect the kidneys from myoglobin.
+
+The surgical team performs emergency fasciotomy of both lower limbs.
+
+Elias is transferred to the Space ICU. Over the next four hours his potassium trends downward and his urine begins to clear.
+
+The colony administrator authorises emergency water rationing across all non-essential sectors.
+
+*Patient stabilised. The colony endures — for now.*`,
+        image: null,
+      },
     ],
   },
 
