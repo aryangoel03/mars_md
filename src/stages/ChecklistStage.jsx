@@ -4,19 +4,46 @@ import PixelButton from '../components/PixelButton.jsx'
 export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
   const [selected, setSelected] = useState(new Set())
   const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
   const [missedCritical, setMissedCritical] = useState([])
   const [shake, setShake] = useState(false)
   const dropdownRef = useRef(null)
+  const searchRef = useRef(null)
+
+  // Sort items alphabetically by label (preserving original indices)
+  const sortedItems = stage.items
+    .map((item, i) => ({ item, i }))
+    .sort((a, b) => a.item.label.localeCompare(b.item.label))
+
+  // Filter by search query
+  const filteredItems = sortedItems.filter(({ item }) =>
+    item.label.toLowerCase().includes(query.toLowerCase())
+  )
 
   // Close dropdown on outside click
   useEffect(() => {
     if (!open) return
     function handleOutsideClick(e) {
-      if (!dropdownRef.current?.contains(e.target)) setOpen(false)
+      if (!dropdownRef.current?.contains(e.target)) {
+        setOpen(false)
+        setQuery('')
+      }
     }
     document.addEventListener('mousedown', handleOutsideClick)
     return () => document.removeEventListener('mousedown', handleOutsideClick)
   }, [open])
+
+  // Focus search input when dropdown opens
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => searchRef.current?.focus(), 50)
+    }
+  }, [open])
+
+  function openDropdown() {
+    if (isCompleted) return
+    setOpen(true)
+  }
 
   function toggleItem(index) {
     if (isCompleted) return
@@ -27,7 +54,6 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
       next.add(index)
     }
     setSelected(next)
-    // Clear missed-critical flags when user re-selects
     if (missedCritical.includes(index)) {
       setMissedCritical(prev => prev.filter(i => i !== index))
     }
@@ -53,6 +79,7 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
   const selectedItems = stage.items
     .map((item, i) => ({ item, i }))
     .filter(({ i }) => selected.has(i))
+    .sort((a, b) => a.item.label.localeCompare(b.item.label))
 
   const revealedItems = selectedItems.filter(({ item }) => item.reveal)
 
@@ -60,9 +87,8 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
     <div className={`checklist-stage pixel-card${shake ? ' shake' : ''}`}>
       <p className="checklist-instruction">{stage.instruction}</p>
 
-      {/* Dropdown multi-select */}
       <div className="dropdown-wrapper" ref={dropdownRef}>
-        {/* Selected chips display */}
+        {/* Selected chips */}
         {selectedItems.length > 0 && (
           <div className="dropdown-chips">
             {selectedItems.map(({ item, i }) => (
@@ -85,11 +111,11 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
           </div>
         )}
 
-        {/* Dropdown trigger */}
+        {/* Trigger */}
         {!isCompleted && (
           <button
             className={`dropdown-trigger${open ? ' dropdown-trigger--open' : ''}`}
-            onClick={() => setOpen(o => !o)}
+            onClick={openDropdown}
           >
             <span className="dropdown-placeholder">
               {selectedItems.length === 0
@@ -100,30 +126,60 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
           </button>
         )}
 
-        {/* Dropdown list */}
+        {/* Dropdown panel */}
         {open && (
           <div className="dropdown-list">
-            {stage.items.map((item, index) => {
-              const isSelected = selected.has(index)
-              const isMissed = missedCritical.includes(index)
-              return (
+            {/* Search bar */}
+            <div className="dropdown-search-wrapper">
+              <span className="dropdown-search-icon">⌕</span>
+              <input
+                ref={searchRef}
+                type="text"
+                className="dropdown-search"
+                placeholder="Search..."
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                onClick={e => e.stopPropagation()}
+              />
+              {query && (
                 <button
-                  key={index}
-                  className={`dropdown-list-item${isSelected ? ' dropdown-list-item--selected' : ''}${isMissed ? ' dropdown-list-item--missed' : ''}`}
-                  onClick={() => toggleItem(index)}
+                  className="dropdown-search-clear"
+                  onClick={() => setQuery('')}
+                  tabIndex={-1}
                 >
-                  <span className="dropdown-list-checkbox">
-                    {isSelected ? '▣' : '□'}
-                  </span>
-                  <span className="dropdown-list-label">{item.label}</span>
+                  ×
                 </button>
-              )
-            })}
+              )}
+            </div>
+
+            {/* Options */}
+            <div className="dropdown-options">
+              {filteredItems.length === 0 ? (
+                <div className="dropdown-no-results">No matches</div>
+              ) : (
+                filteredItems.map(({ item, i }) => {
+                  const isSelected = selected.has(i)
+                  const isMissed = missedCritical.includes(i)
+                  return (
+                    <button
+                      key={i}
+                      className={`dropdown-list-item${isSelected ? ' dropdown-list-item--selected' : ''}${isMissed ? ' dropdown-list-item--missed' : ''}`}
+                      onClick={() => toggleItem(i)}
+                    >
+                      <span className="dropdown-list-checkbox">
+                        {isSelected ? '▣' : '□'}
+                      </span>
+                      <span className="dropdown-list-label">{item.label}</span>
+                    </button>
+                  )
+                })
+              )}
+            </div>
           </div>
         )}
       </div>
 
-      {/* Revealed content for items with a reveal string */}
+      {/* Revealed content */}
       {revealedItems.length > 0 && (
         <div className="checklist-reveals">
           {revealedItems.map(({ item, i }) => (
@@ -135,7 +191,7 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
         </div>
       )}
 
-      {/* Critical item warning */}
+      {/* Critical warning */}
       {missedCritical.length > 0 && (
         <div className="checklist-warning">
           ✕ {missedCritical.length} critical item{missedCritical.length > 1 ? 's' : ''} not selected — highlighted above.

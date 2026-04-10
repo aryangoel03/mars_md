@@ -1,3 +1,5 @@
+import { parseContent } from '../utils/parseContent.jsx'
+
 export default function FeedbackPanel({ message, image, isCorrect }) {
   if (!message) return null
 
@@ -5,7 +7,7 @@ export default function FeedbackPanel({ message, image, isCorrect }) {
     <div className={`feedback-panel ${isCorrect ? 'feedback-panel--correct' : 'feedback-panel--incorrect'}`}>
       <div className="feedback-icon">{isCorrect ? '▶ ' : '✕ '}</div>
       <div className="feedback-body">
-        <p className="feedback-message">{message}</p>
+        <div className="feedback-message">{parseContent(message)}</div>
         {image && (
           <img
             src={image}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import PixelButton from '../components/PixelButton.jsx'
 import FeedbackPanel from '../components/FeedbackPanel.jsx'
 import { parseContent } from '../utils/parseContent.jsx'
@@ -22,10 +22,21 @@ export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
   const [lockedIndex, setLockedIndex] = useState(null)
 
   const [shake, setShake] = useState(false)
+  const bottomRef = useRef(null)
 
   function triggerShake() {
     setShake(true)
     setTimeout(() => setShake(false), 600)
+  }
+
+  function scrollToBottom() {
+    setTimeout(() => {
+      if (!bottomRef.current) return
+      const rect = bottomRef.current.getBoundingClientRect()
+      if (rect.bottom > window.innerHeight) {
+        window.scrollBy({ top: rect.bottom - window.innerHeight + 40, behavior: 'smooth' })
+      }
+    }, 80)
   }
 
   function handleSelect(index) {
@@ -35,13 +46,16 @@ export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
       if (lockedIndex !== null) return
       setLockedIndex(index)
       if (index !== stage.correct) triggerShake()
+      scrollToBottom()
     } else {
       if (correctSelected || wrongAttempts.has(index)) return
       if (index === stage.correct) {
         setCorrectSelected(true)
+        scrollToBottom()
       } else {
         setWrongAttempts(prev => new Set([...prev, index]))
         triggerShake()
+        scrollToBottom()
       }
     }
   }
@@ -135,6 +149,7 @@ export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
           </PixelButton>
         </div>
       )}
+      <div ref={bottomRef} />
     </div>
   )
 }
