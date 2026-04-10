@@ -26,11 +26,11 @@
   --font: 'Press Start 2P', monospace;
 
   /* Font scale — bump these to make everything bigger */
-  --fs-xs:   10px;   /* badges, tiny labels      (was 7-8px) */
-  --fs-sm:   12px;   /* body text, options        (was 8-9px) */
-  --fs-md:   14px;   /* instructions, questions   (was 9-10px) */
-  --fs-lg:   16px;   /* scenario title            (was 10-11px) */
-  --fs-btn:  11px;   /* button text               (was 9-10px) */
+  --fs-xs:   13px;   /* badges, tiny labels */
+  --fs-sm:   16px;   /* body text, options */
+  --fs-md:   18px;   /* instructions, questions */
+  --fs-lg:   20px;   /* scenario title */
+  --fs-btn:  14px;   /* button text */
 }
 
 html, body, #root {
@@ -667,6 +667,21 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+}
+
+.dropdown-options::-webkit-scrollbar {
+  width: 12px;
+}
+.dropdown-options::-webkit-scrollbar-track {
+  background: #040810;
+  border-left: 2px solid #1a2a1a;
+}
+.dropdown-options::-webkit-scrollbar-thumb {
+  background: var(--green);
+  border-left: 2px solid #040810;
+}
+.dropdown-options::-webkit-scrollbar-thumb:hover {
+  background: #00ff41cc;
 }
 
 .dropdown-no-results {

@@ -20,7 +20,7 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
     item.label.toLowerCase().includes(query.toLowerCase())
   )
 
-  // Close dropdown on outside click
+  // Close dropdown on outside click (use 'click' not 'mousedown' so button clicks fire first)
   useEffect(() => {
     if (!open) return
     function handleOutsideClick(e) {
@@ -29,8 +29,8 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
         setQuery('')
       }
     }
-    document.addEventListener('mousedown', handleOutsideClick)
-    return () => document.removeEventListener('mousedown', handleOutsideClick)
+    document.addEventListener('click', handleOutsideClick)
+    return () => document.removeEventListener('click', handleOutsideClick)
   }, [open])
 
   // Focus search input when dropdown opens
@@ -40,9 +40,14 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
     }
   }, [open])
 
-  function openDropdown() {
+  function toggleDropdown() {
     if (isCompleted) return
-    setOpen(true)
+    if (open) {
+      setOpen(false)
+      setQuery('')
+    } else {
+      setOpen(true)
+    }
   }
 
   function toggleItem(index) {
@@ -57,9 +62,15 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
     if (missedCritical.includes(index)) {
       setMissedCritical(prev => prev.filter(i => i !== index))
     }
+    // keep focus in search bar so user can keep typing after selecting an option
+    searchRef.current?.focus()
   }
 
   function handleProceed() {
+    // close dropdown first so layout is stable before any scroll/state changes
+    setOpen(false)
+    setQuery('')
+
     const missed = stage.items
       .map((item, i) => ({ item, i }))
       .filter(({ item, i }) => item.critical && !selected.has(i))
@@ -115,7 +126,7 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
         {!isCompleted && (
           <button
             className={`dropdown-trigger${open ? ' dropdown-trigger--open' : ''}`}
-            onClick={openDropdown}
+            onClick={toggleDropdown}
           >
             <span className="dropdown-placeholder">
               {selectedItems.length === 0

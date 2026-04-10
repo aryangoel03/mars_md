@@ -11,19 +11,23 @@ export default function App() {
   function handleStart() {
     setScenarioIndex(0)
     setScreen('scenario')
+    window.scrollTo(0, 0)
   }
 
   function handleScenarioComplete() {
     if (scenarioIndex < scenarios.length - 1) {
       setScenarioIndex(i => i + 1)
+      window.scrollTo(0, 0)
     } else {
       setScreen('conclusion')
+      window.scrollTo(0, 0)
     }
   }
 
   function handleRestart() {
     setScenarioIndex(0)
     setScreen('intro')
+    window.scrollTo(0, 0)
   }
 
   return (
