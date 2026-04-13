@@ -436,6 +436,27 @@ body {
   justify-content: center;
 }
 
+.mcq-image-container--multi {
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mcq-image-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.mcq-image-caption {
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  color: var(--grey);
+  text-align: center;
+}
+
 .stage-image {
   max-width: 100%;
   max-height: 400px;
@@ -777,6 +798,16 @@ body {
   line-height: 2;
 }
 
+.checklist-warning--discouraged {
+  color: #ffaa00;
+  box-shadow: 0 0 0 2px #ffaa00, 4px 4px 0 0 #7a4e00;
+  background: #1a1000;
+}
+
+.checklist-warning--discouraged strong {
+  color: #ffcc44;
+}
+
 /* ============================================================
    FEEDBACK PANEL
    ============================================================ */
@@ -852,6 +883,98 @@ body {
   display: flex;
   justify-content: flex-end;
   padding-top: 8px;
+}
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 5, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 48px 24px 24px;
+  cursor: zoom-out;
+}
+
+/* Double-frame pixel art border: inner + gap + outer */
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: min(90vw, 920px);
+  max-height: calc(90vh - 48px);
+  cursor: default;
+  background: #060b14;
+  padding: 20px;
+  /* Inner border */
+  border: 3px solid var(--green);
+  /* Gap then outer border via box-shadow */
+  box-shadow:
+    0 0 0 3px #060b14,
+    0 0 0 6px var(--green),
+    0 0 40px rgba(0, 255, 65, 0.12);
+}
+
+.lightbox-image {
+  object-fit: contain;
+  /* min size so small images are properly enlarged */
+  min-width: min(360px, 80vw);
+  min-height: 240px;
+  max-width: 100%;
+  max-height: calc(90vh - 160px);
+  display: block;
+}
+
+.lightbox-caption {
+  font-family: var(--font);
+  font-size: var(--fs-xs);
+  color: var(--grey);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+/* Close button — fixed top-right, always accessible */
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  background: #060b14;
+  color: var(--green);
+  border: none;
+  /* Same double-frame as lightbox content */
+  box-shadow:
+    0 0 0 2px #060b14,
+    0 0 0 4px var(--green),
+    4px 4px 0 4px var(--green-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: crosshair;
+  z-index: 1001;
+  transition: color 0.1s, background 0.1s;
+}
+
+.lightbox-close:hover {
+  background: var(--green);
+  color: #060b14;
+}
+
+/* Clickable image hint */
+.stage-image--zoomable {
+  cursor: zoom-in;
+  transition: opacity 0.15s;
+}
+
+.stage-image--zoomable:hover {
+  opacity: 0.82;
+  box-shadow: 0 0 0 2px var(--green);
 }
 
 /* ============================================================

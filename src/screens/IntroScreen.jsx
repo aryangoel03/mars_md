@@ -21,21 +21,25 @@ export default function IntroScreen({ onStart }) {
           </svg>
         </div>
 
-        <div className="intro-year">[ YEAR 2030 ]</div>
+        <div className="intro-year">[ YEAR 2085 ]</div>
         <h1 className="intro-title">MARS MD</h1>
-        <div className="intro-subtitle">SPACE EMERGENCY DEPARTMENT</div>
+        <div className="intro-subtitle">MARS EMERGENCY DEPARTMENT</div>
 
         <div className="intro-lore pixel-card">
           <p>
-            A nuclear war has devastated Earth. Humanity's survivors have fled
-            to a colony on Mars.
+            World War III drove humanity beyond Earth. The conflict ended
+            decades ago — but much of Earth remains fractured and uninhabitable.
           </p>
           <p>
-            You are the attending physician of the <span className="highlight">Space Emergency Department</span> aboard
-            the LAPD Medical Station — the last line of care for 847 colonists.
+            Mars, once an emergency refuge, has grown into humanity's most
+            advanced outpost: a self-sustaining colony of tens of thousands.
           </p>
           <p>
-            Resources are scarce. Every decision matters.
+            You are the attending physician of the <span className="highlight">Mars Emergency Department</span> at
+            Kessler Station — the last line of care for 62,176 colonists.
+          </p>
+          <p>
+            Resources are finite. Every decision matters.
           </p>
           <p className="intro-mission">
             Five patients await your assessment.

@@ -20,7 +20,7 @@ export default function ConclusionScreen({ onRestart }) {
 
         <div className="conclusion-message pixel-card">
           <p>
-            Against the odds, you navigated the chaos of the Space Emergency
+            Against the odds, you navigated the chaos of the Mars Emergency
             Department and kept your patients alive.
           </p>
           <p>

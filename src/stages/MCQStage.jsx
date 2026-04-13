@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import PixelButton from '../components/PixelButton.jsx'
 import FeedbackPanel from '../components/FeedbackPanel.jsx'
+import Lightbox from '../components/Lightbox.jsx'
 import { parseContent } from '../utils/parseContent.jsx'
 
 // Three feedback modes, determined by data shape:
@@ -30,6 +31,7 @@ export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
   const [lockedIndex, setLockedIndex] = useState(null)
 
   const [shake, setShake] = useState(false)
+  const [lightbox, setLightbox] = useState(null) // { src, caption }
   const bottomRef = useRef(null)
 
   function triggerShake() {
@@ -144,10 +146,37 @@ export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
         {parseContent(stage.question)}
       </div>
 
-      {stage.image && (
-        <div className="mcq-image-container">
-          <img src={stage.image} alt="Clinical image" className="stage-image" />
+      {stage.images && stage.images.length > 0 ? (
+        <div className="mcq-image-container mcq-image-container--multi">
+          {stage.images.map(({ src, caption }, i) => (
+            <figure key={i} className="mcq-image-figure">
+              <img
+                src={src}
+                alt={caption || 'Clinical image'}
+                className="stage-image stage-image--zoomable"
+                onClick={() => setLightbox({ src, caption })}
+              />
+              {caption && <figcaption className="mcq-image-caption">{caption}</figcaption>}
+            </figure>
+          ))}
         </div>
+      ) : stage.image ? (
+        <div className="mcq-image-container">
+          <img
+            src={stage.image}
+            alt="Clinical image"
+            className="stage-image stage-image--zoomable"
+            onClick={() => setLightbox({ src: stage.image, caption: null })}
+          />
+        </div>
+      ) : null}
+
+      {lightbox && (
+        <Lightbox
+          src={lightbox.src}
+          caption={lightbox.caption}
+          onClose={() => setLightbox(null)}
+        />
       )}
 
       <div className="mcq-options">

@@ -6,6 +6,7 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [missedCritical, setMissedCritical] = useState([])
+  const [discouragedSelected, setDiscouragedSelected] = useState([]) // { index, label, reason }
   const [shake, setShake] = useState(false)
   const dropdownRef = useRef(null)
   const searchRef = useRef(null)
@@ -55,8 +56,13 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
     const next = new Set(selected)
     if (next.has(index)) {
       next.delete(index)
+      setDiscouragedSelected(prev => prev.filter(d => d.index !== index))
     } else {
       next.add(index)
+      const item = stage.items[index]
+      if (item.discouraged) {
+        setDiscouragedSelected(prev => [...prev, { index, label: item.label, reason: item.discouraged }])
+      }
     }
     setSelected(next)
     if (missedCritical.includes(index)) {
@@ -212,6 +218,13 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
           ✕ {missedCritical.length} critical item{missedCritical.length > 1 ? 's' : ''} not selected — highlighted above.
         </div>
       )}
+
+      {/* Discouraged warnings — one amber panel per selected discouraged item */}
+      {discouragedSelected.map(({ index, label, reason }) => (
+        <div key={index} className="checklist-warning checklist-warning--discouraged">
+          ⚠ <strong>{label}:</strong> {reason}
+        </div>
+      ))}
 
       {!isCompleted && onNext && (
         <div className="stage-actions">
