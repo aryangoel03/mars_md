@@ -1,12 +1,26 @@
 import PixelButton from '../components/PixelButton.jsx'
 
-export default function ConclusionScreen({ onRestart }) {
+function getGrade(score, maxScore) {
+  if (maxScore === 0) return { label: 'N/A', pct: 0 }
+  const pct = (score / maxScore) * 100
+  let label
+  if (pct >= 95) label = 'Consultant'
+  else if (pct >= 80) label = 'Registrar'
+  else if (pct >= 65) label = 'Resident'
+  else if (pct >= 50) label = 'Intern'
+  else if (pct >= 35) label = 'Med Student'
+  else label = 'Quack'
+  return { label, pct }
+}
+
+export default function ConclusionScreen({ onRestart, onTryAnother, onMainMenu, score, maxScore, mode }) {
+  const { label, pct } = getGrade(score, maxScore)
+
   return (
     <div className="conclusion-screen">
       <div className="conclusion-content">
         <div className="conclusion-art" aria-hidden="true">
           <svg width="90" height="60" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Mars planet */}
             <circle cx="60" cy="40" r="35" fill="#c1440e" opacity="0.9"/>
             <ellipse cx="50" cy="30" rx="12" ry="8" fill="#a03810" opacity="0.6"/>
             <ellipse cx="70" cy="50" rx="8" ry="5" fill="#a03810" opacity="0.6"/>
@@ -17,6 +31,14 @@ export default function ConclusionScreen({ onRestart }) {
         <div className="conclusion-badge">[ SHIFT COMPLETE ]</div>
         <h1 className="conclusion-title">YOU SURVIVED</h1>
         <div className="conclusion-subtitle">ONE DAY ON MARS</div>
+
+        <div className="score-display pixel-card">
+          <div className="score-display-numbers">
+            {score} <span className="score-display-sep">/</span> {maxScore}
+          </div>
+          <div className="score-display-pct">{Math.round(pct)}%</div>
+          <div className="score-display-grade">{label}</div>
+        </div>
 
         <div className="conclusion-message pixel-card">
           <p>
@@ -31,9 +53,22 @@ export default function ConclusionScreen({ onRestart }) {
           </p>
         </div>
 
-        <PixelButton onClick={onRestart} variant="secondary">
-          PLAY AGAIN
-        </PixelButton>
+        <div className="conclusion-buttons">
+          {mode === 'practice' ? (
+            <>
+              <PixelButton onClick={onTryAnother} variant="primary">
+                TRY ANOTHER
+              </PixelButton>
+              <PixelButton onClick={onMainMenu} variant="secondary">
+                MAIN MENU
+              </PixelButton>
+            </>
+          ) : (
+            <PixelButton onClick={onRestart} variant="secondary">
+              PLAY AGAIN
+            </PixelButton>
+          )}
+        </div>
       </div>
     </div>
   )

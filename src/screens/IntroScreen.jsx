@@ -1,6 +1,6 @@
 import PixelButton from '../components/PixelButton.jsx'
 
-export default function IntroScreen({ onStart }) {
+export default function IntroScreen({ onStart, onPractice }) {
   return (
     <div className="intro-screen">
       <div className="intro-content">
@@ -26,29 +26,33 @@ export default function IntroScreen({ onStart }) {
         <div className="intro-subtitle">MARS EMERGENCY DEPARTMENT</div>
 
         <div className="intro-lore pixel-card">
-          <p>
-            World War III drove humanity beyond Earth. The conflict ended
-            decades ago — but much of Earth remains fractured and uninhabitable.
+          <p className="intro-lore-context">
+            World War III drove humanity to Mars. The conflict ended decades
+            ago — but much of Earth remains fractured and uninhabitable.
           </p>
-          <p>
-            Mars, once an emergency refuge, has grown into humanity's most
-            advanced outpost: a self-sustaining colony of tens of thousands.
+          <div className="intro-lore-divider" aria-hidden="true" />
+          <p className="intro-lore-role">
+            You are the attending physician of the{' '}
+            <span className="highlight">Mars Emergency Department</span>{' '}
+            at Kessler Station.
           </p>
-          <p>
-            You are the attending physician of the <span className="highlight">Mars Emergency Department</span> at
-            Kessler Station — the last line of care for 62,176 colonists.
+          <p className="intro-lore-stat">
+            <span className="intro-lore-stat-label">COLONISTS UNDER CARE</span>
+            <span className="intro-lore-stat-value">62,176</span>
           </p>
-          <p>
+          <p className="intro-lore-warning">
             Resources are finite. Every decision matters.
-          </p>
-          <p className="intro-mission">
-            Five patients await your assessment.
           </p>
         </div>
 
-        <PixelButton onClick={onStart} variant="primary" size="large">
-          BEGIN SHIFT
-        </PixelButton>
+        <div className="intro-buttons">
+          <PixelButton onClick={onStart} variant="primary" size="large">
+            BEGIN SHIFT
+          </PixelButton>
+          <PixelButton onClick={onPractice} variant="secondary" size="large">
+            PRACTICE
+          </PixelButton>
+        </div>
       </div>
     </div>
   )

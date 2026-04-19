@@ -1,13 +1,15 @@
 import { useState, useRef, useEffect } from 'react'
 import PixelButton from '../components/PixelButton.jsx'
 
-export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
+export default function ChecklistStage({ stage, onNext, isLast, isCompleted, onScore }) {
   const [selected, setSelected] = useState(new Set())
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [missedCritical, setMissedCritical] = useState([])
   const [discouragedSelected, setDiscouragedSelected] = useState([]) // { index, label, reason }
   const [shake, setShake] = useState(false)
+  const scoredRef = useRef(false)
+  const hadMissesRef = useRef(false)
   const dropdownRef = useRef(null)
   const searchRef = useRef(null)
 
@@ -87,10 +89,16 @@ export default function ChecklistStage({ stage, onNext, isLast, isCompleted }) {
       .map(({ i }) => i)
 
     if (missed.length > 0) {
+      hadMissesRef.current = true
       setMissedCritical(missed)
       setShake(true)
       setTimeout(() => setShake(false), 600)
       return
+    }
+
+    if (!scoredRef.current && onScore) {
+      scoredRef.current = true
+      onScore(hadMissesRef.current ? 0 : 5, 5)
     }
 
     setMissedCritical([])

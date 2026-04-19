@@ -152,6 +152,22 @@ body {
     0 0 12px rgba(0, 200, 255, 0.3);
 }
 
+.pixel-btn--danger {
+  background: var(--red-dark);
+  color: var(--red);
+  box-shadow:
+    0 0 0 2px var(--red),
+    3px 3px 0 0 #1a0000;
+}
+
+.pixel-btn--danger:hover:not(:disabled) {
+  background: #1a0000;
+  box-shadow:
+    0 0 0 2px var(--red),
+    3px 3px 0 0 #1a0000,
+    0 0 12px rgba(255, 68, 68, 0.3);
+}
+
 .pixel-btn--large {
   font-size: var(--fs-md);
   padding: 14px 28px;
@@ -229,23 +245,52 @@ body {
 
 .intro-lore {
   text-align: left;
-  font-size: var(--fs-sm);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.intro-lore-context {
+  font-size: var(--fs-xs);
+  color: var(--grey);
+  line-height: 1.9;
+}
+
+.intro-lore-divider {
+  border-top: 1px solid #1a2a1a;
+}
+
+.intro-lore-role {
+  font-size: var(--fs-xs);
   color: var(--white);
+  line-height: 1.9;
+}
+
+.intro-lore-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.intro-lore-stat-label {
+  font-size: 10px;
+  color: var(--grey);
+  letter-spacing: 0.15em;
+}
+
+.intro-lore-stat-value {
+  font-size: clamp(22px, 5vw, 32px);
+  color: var(--cyan);
+  text-shadow: 0 0 12px rgba(0, 200, 255, 0.5);
+  letter-spacing: 0.05em;
+}
+
+.intro-lore-warning {
+  font-size: var(--fs-xs);
+  color: var(--yellow);
+  letter-spacing: 0.05em;
   line-height: 1.7;
-  padding: 16px 20px;
-}
-
-.intro-lore p {
-  margin-bottom: 8px;
-}
-
-.intro-lore p:last-child {
-  margin-bottom: 0;
-}
-
-.intro-mission {
-  color: var(--yellow) !important;
-  text-align: center;
 }
 
 .highlight {
@@ -333,6 +378,59 @@ body {
   align-items: center;
   gap: 8px;
   text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.scenario-abandon-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* --- Abandon confirmation overlay --- */
+.abandon-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.abandon-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 32px;
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+}
+
+.abandon-message {
+  font-size: var(--fs-md);
+  color: var(--red);
+  letter-spacing: 0.1em;
+}
+
+.abandon-subtext {
+  font-size: var(--fs-xs);
+  color: var(--grey);
+}
+
+.abandon-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.abandon-buttons .pixel-btn {
+  width: 100%;
 }
 
 .scenario-badge {
@@ -1007,4 +1105,129 @@ body {
   .intro-title {
     font-size: 22px;
   }
+}
+
+/* ============================================================
+   INTRO BUTTONS
+   ============================================================ */
+.intro-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* ============================================================
+   CONCLUSION BUTTONS & SCORE
+   ============================================================ */
+.conclusion-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.score-display {
+  text-align: center;
+  padding: 20px 28px;
+  min-width: 220px;
+}
+
+.score-display-numbers {
+  font-size: clamp(32px, 7vw, 52px);
+  color: var(--green);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.score-display-sep {
+  font-size: 0.6em;
+  color: var(--green-dim);
+}
+
+.score-display-pct {
+  font-size: var(--fs-sm);
+  color: var(--cyan);
+  margin-top: 6px;
+  letter-spacing: 0.1em;
+}
+
+.score-display-grade {
+  font-size: clamp(18px, 4vw, 26px);
+  color: var(--yellow);
+  letter-spacing: 0.15em;
+  margin-top: 4px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+/* ============================================================
+   PRACTICE SELECT SCREEN
+   ============================================================ */
+.practice-select-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  padding: 24px 16px 40px;
+  margin: 0 auto;
+}
+
+.practice-select-header {
+  text-align: center;
+}
+
+.practice-select-title {
+  font-size: clamp(20px, 4vw, 28px);
+  color: var(--green);
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+}
+
+.practice-select-subtitle {
+  font-size: var(--fs-xs);
+  color: var(--grey);
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+}
+
+.scenario-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.scenario-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+}
+
+.scenario-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.scenario-card-title {
+  font-size: var(--fs-sm);
+  color: var(--green);
+  letter-spacing: 0.05em;
+}
+
+.scenario-card-subtitle {
+  font-size: var(--fs-xs);
+  color: var(--grey);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.practice-select-back {
+  margin-top: 8px;
 }

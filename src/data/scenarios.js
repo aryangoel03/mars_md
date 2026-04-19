@@ -1,23 +1,68 @@
 // =============================================================================
 // MARS MD — SCENARIO DATA FILE
 // =============================================================================
-// Edit this file to add or modify scenarios.
 //
-// STAGE TYPES:
-//   "narrative"  — display-only text block. Supports markdown-style **bold**.
-//                  Optional: image (path string like "/images/filename.png")
+// HOW TO ADD A NEW SCENARIO
+// -------------------------
+// Append a new object to the scenarios array below. Full template:
 //
-//   "checklist"  — click items to reveal them. Items can be critical: true.
-//                  Missing a critical item on "Proceed" triggers an error.
-//                  Items can have a "reveal" string shown when clicked.
+// {
+//   id: <number>,           // Unique integer
+//   title: "Patient Name",
+//   subtitle: "Short flavour subtitle",
+//   stages: [
 //
-//   "mcq"        — 2–5 option question. One correct answer (0-indexed).
-//                  Optional: image above options, explanationImage after answer.
-//                  feedback: null → generic wrong message + show explanation on correct
-//                  feedback: ["per option 0 text", "per option 1 text", ...]
-//                    → tailored message shown immediately for any selection
+//     // NARRATIVE — display-only text. Supports **bold**.
+//     {
+//       type: "narrative",
+//       content: `Text here. **Bold** supported.`,
+//       image: "/images/filename.png",  // or null
+//     },
 //
-// HOW TO ADD IMAGES:
+//     // CHECKLIST — searchable multi-select dropdown.
+//     // critical: true  → must be selected before proceeding (shake/warn if missed; −score)
+//     // reveal: string  → card shown when item is selected; null for no reveal
+//     {
+//       type: "checklist",
+//       instruction: "Instruction shown above the dropdown",
+//       items: [
+//         { label: "Item label", critical: true,  reveal: "Text shown on selection" },
+//         { label: "Item label", critical: false, reveal: null },
+//       ],
+//     },
+//
+//     // MCQ — single correct answer (0-indexed). Three feedback modes:
+//     //
+//     //   Generic        (feedback: null)
+//     //     Wrong → "Incorrect — try again". Correct → explanation. Retry until correct.
+//     //
+//     //   Accumulating   (feedback: array, explanation: string)
+//     //     Wrong → labeled panel accumulates per wrong option. Correct → explanation. Retry.
+//     //
+//     //   Lock mode      (feedback: array, explanation: null)
+//     //     Any selection immediately locks. Per-option feedback shown. No retry.
+//     //
+//     // image: single image above options (string path or null)
+//     // images: array of { src, caption } for multiple images (or omit/null)
+//     // explanationImage: shown below explanation on correct answer (or null)
+//     //
+//     // Scoring: max = options.length − 1. −1 per wrong attempt (min 0).
+//     {
+//       type: "mcq",
+//       question: "Question text?",
+//       image: null,
+//       options: ["Option A", "Option B", "Option C"],
+//       correct: 0,
+//       feedback: null,                    // null | ["per-option text or null", ...]
+//       explanation: "Shown on correct.",  // null | string
+//       explanationImage: null,
+//     },
+//
+//   ],
+// },
+//
+// HOW TO ADD IMAGES
+// -----------------
 //   Drop files into public/images/ and reference as "/images/filename.png"
 // =============================================================================
 
@@ -311,6 +356,30 @@ Elias was extracted by drone teams after being pinned beneath the chassis of a M
 
 **Social History:** Non-smoker. Stationed on Mars for 18 months.`,
         image: null,
+      },
+
+      // -----------------------------------------------------------------------
+      // Q1 — Differentials
+      // -----------------------------------------------------------------------
+      {
+        type: "checklist",
+        instruction: "List some possible differentials for this patient:",
+        items: [
+          // --- Do not miss ---
+          { label: "Acute Compartment Syndrome", critical: true },
+          { label: "Hyperkalaemic Cardiac Toxicity", critical: true },
+          { label: "Pigment-Induced Acute Kidney Injury", critical: true },
+          { label: "Tension Pneumothorax", critical: true },
+          { label: "Hypovolaemic Shock", critical: true },
+          // --- Non-critical ---
+          { label: "Crush Syndrome (Traumatic Rhabdomyolysis)", critical: false },
+          { label: "Fat Embolism Syndrome", critical: false },
+          { label: "Traumatic Myocardial Contusion", critical: false },
+          { label: "Demand Ischaemia (Type 2 MI)", critical: false },
+          { label: "Hypocalcaemia", critical: false },
+          { label: "Acute Perchlorate Toxicity", critical: false },
+          { label: "Chemical / Crystalline Pneumonitis", critical: false },
+        ],
       },
 
       // -----------------------------------------------------------------------
@@ -1079,21 +1148,4 @@ Her husband, already under the care of the oncology team, will accompany her to 
     ],
   },
 
-  // ---------------------------------------------------------------------------
-  // SCENARIO 5 — PLACEHOLDER
-  // ---------------------------------------------------------------------------
-  {
-    id: 5,
-    title: "Patient Name Here",
-    subtitle: "Scenario subtitle here",
-    stages: [
-      {
-        type: "narrative",
-        content: `**Patient:** Name | **Age:** XX | **Sex:** X
-
-Add your scenario history here...`,
-        image: null,
-      },
-    ],
-  },
 ]

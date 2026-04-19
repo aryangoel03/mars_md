@@ -18,7 +18,7 @@ import { parseContent } from '../utils/parseContent.jsx'
 //     Wrong → shake, show "Incorrect — try again", option disabled
 //     Correct → show explanation + NEXT
 
-export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
+export default function MCQStage({ stage, onNext, isLast, isCompleted, onScore }) {
   const hasTailored = Array.isArray(stage.feedback)
   const isAccumulating = hasTailored && !!stage.explanation
 
@@ -32,7 +32,16 @@ export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
 
   const [shake, setShake] = useState(false)
   const [lightbox, setLightbox] = useState(null) // { src, caption }
+  const scoredRef = useRef(false)
   const bottomRef = useRef(null)
+
+  const maxPoints = stage.options.length - 1
+
+  function reportScore(wrongCount, isCorrect) {
+    if (scoredRef.current || !onScore) return
+    scoredRef.current = true
+    onScore(isCorrect ? Math.max(0, maxPoints - wrongCount) : 0, maxPoints)
+  }
 
   function triggerShake() {
     setShake(true)
@@ -56,9 +65,11 @@ export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
       if (correctSelected || wrongAttempts.has(index)) return
       if (index === stage.correct) {
         setCorrectSelected(true)
+        reportScore(wrongAttempts.size, true)
         scrollToBottom()
       } else {
-        setWrongAttempts(prev => new Set([...prev, index]))
+        const newWrong = new Set([...wrongAttempts, index])
+        setWrongAttempts(newWrong)
         const text = stage.feedback[index]
         if (text) {
           setWrongFeedbackList(prev => [...prev, {
@@ -77,6 +88,7 @@ export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
       // Lock mode
       if (lockedIndex !== null) return
       setLockedIndex(index)
+      reportScore(0, index === stage.correct)
       if (index !== stage.correct) triggerShake()
       scrollToBottom()
     } else {
@@ -84,6 +96,7 @@ export default function MCQStage({ stage, onNext, isLast, isCompleted }) {
       if (correctSelected || wrongAttempts.has(index)) return
       if (index === stage.correct) {
         setCorrectSelected(true)
+        reportScore(wrongAttempts.size, true)
         scrollToBottom()
       } else {
         setWrongAttempts(prev => new Set([...prev, index]))
