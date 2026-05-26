@@ -107,15 +107,15 @@ On further history:
         instruction: "List some possible differentials for this patient:",
         items: [
           // --- Core differentials (provided) ---
-          { label: "Pulmonary embolism", critical: true },
-          { label: "Pneumothorax", critical: true },
+          { label: "Pulmonary embolism", critical: true, reveal: "Progressive exertional dyspnoea, pleuritic chest pain, haemoptysis, and possible underlying malignancy suggested by weight loss strongly support pulmonary embolism as a differential." },
+          { label: "Pneumothorax", critical: true, reveal: "The sudden onset of extreme shortness of breath and pleuritic chest pain after trauma is highly concerning for a pneumothorax causing lung collapse." },
           { label: "Pneumonia (bacterial or fungal)", critical: false },
           { label: "COPD exacerbation", critical: false },
-          { label: "Myocardial Infarction", critical: true },
+          { label: "Myocardial Infarction", critical: true, reveal: "Acute dyspnoea with chest discomfort in a 70-year-old patient could represent myocardial ischaemia or infarction, even without classic crushing chest pain." },
           { label: "Heart failure", critical: false },
           { label: "Interstitial lung disease", critical: false },
           // --- Distractors ---
-          { label: "Aortic dissection", critical: true },
+          { label: "Aortic dissection", critical: true, reveal: "Sudden severe shortness of breath and chest discomfort following a transport collision in an elderly patient raises concern for traumatic aortic injury or dissection." },
           { label: "Cardiac tamponade", critical: false },
           { label: "Primary lung malignancy", critical: false },
           { label: "Pleural effusion", critical: false },
@@ -366,11 +366,11 @@ Elias was extracted by drone teams after being pinned beneath the chassis of a M
         instruction: "List some possible differentials for this patient:",
         items: [
           // --- Do not miss ---
-          { label: "Acute Compartment Syndrome", critical: true },
-          { label: "Hyperkalaemic Cardiac Toxicity", critical: true },
-          { label: "Pigment-Induced Acute Kidney Injury", critical: true },
-          { label: "Tension Pneumothorax", critical: true },
-          { label: "Hypovolaemic Shock", critical: true },
+          { label: "Acute Compartment Syndrome", critical: true, reveal: "Prolonged bilateral crush injury with severe pain and limb heaviness raises major concern for increased compartment pressures causing neurovascular compromise." },
+          { label: "Hyperkalaemic Cardiac Toxicity", critical: true, reveal: "Crush injuries can cause massive muscle breakdown and potassium release, placing Elias at risk of life-threatening cardiac arrhythmias." },
+          { label: "Pigment-Induced Acute Kidney Injury", critical: true, reveal: "Dark \"tea-coloured\" urine after crush injury strongly suggests myoglobinuria from rhabdomyolysis causing acute kidney injury." },
+          { label: "Tension Pneumothorax", critical: true, reveal: "Major trauma with prolonged compression beneath a rover means occult thoracic injury and tension pneumothorax must be excluded as a life-threatening cause of deterioration." },
+          { label: "Hypovolaemic Shock", critical: true, reveal: "Extensive tissue trauma and possible fluid sequestration into damaged muscle compartments may lead to significant intravascular volume loss and shock." },
           // --- Non-critical ---
           { label: "Crush Syndrome (Traumatic Rhabdomyolysis)", critical: false },
           { label: "Fat Embolism Syndrome", critical: false },
@@ -590,11 +590,11 @@ Ilya presented to the Mars Emergency Department with worsening shortness of brea
         type: "checklist",
         instruction: "List some possible differentials for this patient:",
         items: [
-          { label: "Myocardial Infarction", critical: true },
-          { label: "Aortic dissection", critical: true },
+          { label: "Myocardial Infarction", critical: true, reveal: "Central pressure-like chest discomfort with dyspnoea and exertional worsening is consistent with possible acute myocardial ischaemia." },
+          { label: "Aortic dissection", critical: true, reveal: "Recent blunt chest trauma combined with chest pain and lightheadedness raises concern for traumatic injury to the aorta causing impaired blood flow or bleeding." },
           { label: "Tension pneumothorax", critical: false },
-          { label: "Pulmonary embolism", critical: true },
-          { label: "Cardiac tamponade", critical: true },
+          { label: "Pulmonary embolism", critical: true, reveal: "Progressive shortness of breath, chest discomfort, and lightheadedness following trauma could indicate a pulmonary embolism causing impaired pulmonary circulation." },
+          { label: "Cardiac tamponade", critical: true, reveal: "Gradually worsening dyspnoea, fatigue, chest pressure, and symptoms worsening when lying flat after chest trauma are highly concerning for fluid compressing the heart." },
           { label: "Acute heart failure / pulmonary oedema", critical: false },
           { label: "Pericarditis", critical: false },
           { label: "Myocarditis", critical: false },
@@ -864,10 +864,10 @@ Mercury presented to the Mars Emergency Department this morning with severe shor
         instruction: "List some possible differentials for this patient:",
         items: [
           // --- Do not miss ---
-          { label: "Pneumonia (bacterial or fungal)", critical: true },
-          { label: "COPD exacerbation", critical: true },
-          { label: "Primary lung cancer", critical: true },
-          { label: "Pulmonary embolism", critical: true },
+          { label: "Pneumonia (bacterial or fungal)", critical: true, reveal: "Exposure in the artificial rainforest combined with purulent sputum, progressive dyspnoea, and systemic symptoms raises strong concern for respiratory infection, including possible fungal infection." },
+          { label: "COPD exacerbation", critical: true, reveal: "Severe worsening dyspnoea with a chronic productive cough and sputum production is consistent with an acute exacerbation of underlying obstructive lung disease." },
+          { label: "Primary lung cancer", critical: true, reveal: "Significant unintentional weight loss, chronic fatigue, persistent cough, and progressive respiratory symptoms are concerning for an underlying lung malignancy." },
+          { label: "Pulmonary embolism", critical: true, reveal: "Acute worsening shortness of breath out of proportion to chest findings requires exclusion of pulmonary embolism as a potentially life-threatening cause." },
           { label: "Hypersensitivity pneumonitis", critical: false },
           { label: "Tuberculosis", critical: false },
           { label: "Heart failure", critical: false },
